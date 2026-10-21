@@ -4,9 +4,57 @@
 
 Skinny Legend is a photo-first calorie and nutrition tracker. Take a picture of your food, get an instant estimate of calories, protein, carbs and fat, tweak it if the AI got it wrong, and watch your day add up. No endless database searching, just main-character energy.
 
-Built with [Expo](https://expo.dev) (React Native and TypeScript), so it runs on iPhone and Android with **Expo Go**.
+This repo has two apps:
 
-## ✨ Features
+- **`web/`**: the website, built with Next.js and deployable to Vercel. Works great on your phone. **Start here.**
+- **Root**: the mobile app, built with [Expo](https://expo.dev) (React Native and TypeScript). It runs on iPhone and Android with **Expo Go**.
+
+## 🌐 Website (`web/`)
+
+Hot pink, liquid chrome, Y2K gloss. Snap your plate and get the full nutrition tea.
+
+| Mobile | Result | Desktop |
+| ------ | ------ | ------- |
+| <img src="docs/screenshots/web-mobile-home.jpg" width="220" /> | <img src="docs/screenshots/web-mobile-result.jpg" width="220" /> | <img src="docs/screenshots/web-desktop-home.jpg" width="420" /> |
+
+**What it does**
+
+- A big glossy **Snap your plate** button opens the camera on phones. On desktop you can upload or drag and drop a photo.
+- Photos are resized and compressed in the browser (max 1024px JPEG) before upload.
+- `POST /api/analyze` returns the foods it sees with portion estimates, plus totals: calories, protein, carbs, fat, fiber, sugar, sodium, saturated fat and cholesterol. It also returns vitamin A, C, D, calcium, iron and potassium with %DV, a confidence score and a sassy verdict.
+- Results show as a chrome **Nutrition Facts** card with a per-food breakdown. Every number is editable before you log.
+- The **daily log** shows today's meals with thumbnails, running totals against an editable calorie goal, and macro "gel tube" bars. Meals can be deleted. Everything is stored in `localStorage`.
+
+**Run it**
+
+```bash
+cd web
+npm i
+npm run dev        # http://localhost:3000
+npm run build      # production build
+```
+
+**AI analysis and env vars** (server-only, never sent to the browser; see `web/.env.example`)
+
+| Var | Required | Default | What |
+| --- | --- | --- | --- |
+| `XAI_API_KEY` | for real analysis | none | xAI key. Calls `https://api.x.ai/v1/chat/completions` with the photo as a base64 data URL |
+| `NUTRITION_MODEL` | no | `grok-4.7` | Vision-capable Grok model |
+| `NUTRITION_REASONING_EFFORT` | no | `low` | xAI reasoning effort (`low`/`medium`/`high`) |
+| `OPENAI_API_KEY` | alternative | none | Used only if `XAI_API_KEY` is not set |
+| `OPENAI_NUTRITION_MODEL` | no | `gpt-4o-mini` | OpenAI vision model |
+
+With **no key**, `/api/analyze` returns clearly labeled **MOCK** example data and the site shows a **Demo mode** badge.
+
+**Deploy on Vercel**
+
+1. Import `djlamoon/skinny-legend` in Vercel.
+2. Set **Root Directory** to `web`. The framework is detected as Next.js.
+3. Add `XAI_API_KEY` (and optionally `NUTRITION_MODEL`) under Environment Variables, then deploy.
+
+## 📱 Mobile app (Expo)
+
+### ✨ Features
 
 - **Today screen**: your calories vs. your daily goal, macro progress bars, and a feed of today's meals with photo thumbnails. Long-press a meal to delete it.
 - **Snap a meal**: take a photo with the camera or pick one from your library.
@@ -16,7 +64,7 @@ Built with [Expo](https://expo.dev) (React Native and TypeScript), so it runs on
 - **Settings**: set your daily calorie and macro goals.
 - **Local-first**: everything is saved on your device with AsyncStorage. No account needed.
 
-## 📸 Screenshots
+### 📸 Screenshots
 
 _Coming soon. Drop images in `docs/screenshots/` and link them here._
 
@@ -24,7 +72,7 @@ _Coming soon. Drop images in `docs/screenshots/` and link them here._
 | ----- | ---- | ------- |
 | _TBD_ | _TBD_ | _TBD_ |
 
-## 🚀 Run it
+### 🚀 Run it
 
 Prereqs: Node 20+ and the **Expo Go** app on your phone.
 
@@ -42,7 +90,7 @@ npm run typecheck   # npx tsc --noEmit
 npx expo-doctor     # sanity-check dependencies
 ```
 
-## 🧠 Photo analysis: mock vs. real
+### 🧠 Photo analysis: mock vs. real
 
 All analysis goes through [`src/services/nutrition.ts`](src/services/nutrition.ts):
 
@@ -52,7 +100,7 @@ All analysis goes through [`src/services/nutrition.ts`](src/services/nutrition.t
 
 To switch, copy `.env.example` to `.env` and set `EXPO_PUBLIC_NUTRITION_PROVIDER=real`. `.env` is git-ignored, so **never commit keys**. Heads-up: `EXPO_PUBLIC_*` values get bundled into the app. In production, call your own backend or proxy that holds the secret.
 
-## 🗂️ Project structure
+### 🗂️ Project structure
 
 ```
 src/
@@ -70,7 +118,8 @@ src/
 
 ## 🛣️ Roadmap
 
-- [ ] **Real AI photo analysis** (vision model behind a small backend proxy)
+- [x] **Real AI photo analysis** on the web (xAI Grok vision via `web/` API route)
+- [ ] Real AI photo analysis in the Expo app (call the web `/api/analyze` endpoint)
 - [ ] **Barcode scan** for packaged foods
 - [ ] **Weekly trends**: charts for calories and macros over time
 - [ ] **Streaks**: keep the legend era going 🔥
