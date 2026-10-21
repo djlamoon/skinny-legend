@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Skinny Legend",
+    "slug": "skinny-legend",
+    "scheme": "skinnylegend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Skinny Legend uses your camera to snap your meals so it can track calories and macros.",
+        "NSPhotoLibraryUsageDescription": "Skinny Legend lets you pick food photos from your library to log meals."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Skinny Legend uses your camera to snap your meals so it can track calories and macros.",
+          "photosPermission": "Skinny Legend lets you pick food photos from your library to log meals."
+        }
+      ]
+    ]
+  }
+}
