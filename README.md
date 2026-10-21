@@ -1,6 +1,6 @@
 # 💅 Skinny Legend
 
-> Snap your plate. Know your macros. Be the legend.
+> Snap your plate. Know your macros. Be the Iconic.
 
 Skinny Legend is a photo-first calorie and nutrition tracker. Take a picture of your food, get an instant estimate of calories, protein, carbs and fat, tweak it if the AI got it wrong, and watch your day add up. No endless database searching, just main-character energy.
 
