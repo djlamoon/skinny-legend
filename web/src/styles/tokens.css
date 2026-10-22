@@ -1,0 +1,51 @@
+/* ==========================================================================
+   Skinny Legend design tokens — luxe Y2K liquid chrome x hot pink
+   Every color, material and font lives here; components reference tokens only.
+   ========================================================================== */
+:root {
+  /* fonts */
+  --f-script: var(--font-script), "Lobster", cursive;
+  --f-wide: var(--font-wide), "Arial Black", system-ui, sans-serif;
+  --f-body: var(--font-body), system-ui, -apple-system, sans-serif;
+
+  /* core palette */
+  --ink: #0a0608;            /* page black */
+  --ink-2: #140c11;          /* card black */
+  --ink-3: #21141b;          /* raised black */
+  --line: rgba(255, 255, 255, 0.1);
+  --text: #fbf2f7;
+  --text-2: #d9b9c9;         /* muted on black (AA on --ink-2) */
+  --hot: #ff2e97;
+  --hot-2: #e0007a;
+  --hot-3: #a3005a;
+  --hot-glow: rgba(255, 46, 151, 0.55);
+  --blush: #ffc2e1;
+
+  /* riso / halftone print (lips print feel) */
+  --paper: #efe5f3;          /* pale lilac paper */
+  --paper-2: #e6d8ee;
+  --riso: #c00e63;           /* riso pink ink */
+  --riso-deep: #6a0838;      /* deep ink, AA on paper */
+  --halftone: radial-gradient(circle at center, rgba(212, 19, 111, 0.22) 0 1.1px, transparent 1.6px) 0 0 / 7px 7px;
+  --halftone-strong: radial-gradient(circle at center, rgba(212, 19, 111, 0.55) 0 1.6px, transparent 2.1px) 0 0 / 7px 7px;
+
+  /* metals */
+  --chrome: linear-gradient(180deg, #ffffff 0%, #f4f2f6 28%, #c9c4cf 46%, #3a3540 50%, #57505e 58%, #b9b3c0 74%, #ffffff 92%, #ffd6ea 100%);
+  --chrome-soft: linear-gradient(180deg, #ffffff 0%, #ebe8ee 40%, #b5afbb 52%, #d8d4dd 70%, #ffffff 100%);
+  --chrome-rim: linear-gradient(135deg, #ffffff 0%, #8e8796 22%, #ffffff 40%, #4e4855 58%, #f2eff5 76%, #a39cab 100%);
+  --pink-rim: linear-gradient(180deg, #ffa6d5 0%, #ff2e97 32%, #b8005f 64%, #ff3fa0 88%, #ffa3d3 100%);
+  --brushed-silver:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.18) 0 1px, rgba(0, 0, 0, 0.05) 1px 2px, transparent 2px 3px),
+    linear-gradient(90deg, #8f8996 0%, #f6f4f8 18%, #b7b1be 36%, #ffffff 52%, #9d97a5 70%, #e9e6ed 86%, #a59fac 100%);
+
+  /* original textures (generated for this project, see public/tex) */
+  --tex-latex: url("/tex/latex.webp");
+  --tex-liquid: url("/tex/liquid-chrome.webp");
+  --tex-brushed: url("/tex/brushed-pink.webp");
+
+  /* shape + depth */
+  --radius: 24px;
+  --radius-sm: 16px;
+  --shadow-card: 0 24px 50px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 46, 151, 0.22), 0 0 40px rgba(255, 46, 151, 0.12);
+  --bevel-top: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}

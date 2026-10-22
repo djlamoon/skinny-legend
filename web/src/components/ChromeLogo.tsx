@@ -1,74 +1,120 @@
-/** Bubbly liquid-chrome "Skinny Legend" wordmark, pure SVG. */
-export function ChromeLogo() {
-  const line = (text: string, y: number, fill: string, size: number) => (
-    <g style={{ fontFamily: "var(--font-display), 'Arial Rounded MT Bold', sans-serif", fontWeight: 700 }}>
-      {/* deep outline + drop */}
-      <text x="50%" y={y + 6} textAnchor="middle" fontSize={size} fill="#3a0322" stroke="#3a0322" strokeWidth="16" strokeLinejoin="round" opacity="0.55" filter="url(#sl-blur)">
-        {text}
-      </text>
-      <text x="50%" y={y} textAnchor="middle" fontSize={size} fill="#4a0730" stroke="url(#sl-rim)" strokeWidth="14" strokeLinejoin="round">
-        {text}
-      </text>
-      <text x="50%" y={y} textAnchor="middle" fontSize={size} fill="none" stroke="#5c0b3a" strokeWidth="5" strokeLinejoin="round">
-        {text}
-      </text>
-      {/* chrome body */}
-      <text x="50%" y={y} textAnchor="middle" fontSize={size} fill={fill}>
-        {text}
-      </text>
-      {/* top specular gloss */}
-      <text x="50%" y={y} textAnchor="middle" fontSize={size} fill="url(#sl-gloss)" style={{ mixBlendMode: "screen" }}>
-        {text}
-      </text>
+/**
+ * "Skinny Legend" wordmark: liquid-chrome script with a glossy hot-pink rim,
+ * dark bevel, specular highlights and 4-point sparkles. Pure SVG, no images.
+ */
+const LINES = [
+  { text: "Skinny", x: "45%", y: 150 },
+  { text: "Legend", x: "56%", y: 292 },
+];
+
+function Words(props: React.SVGProps<SVGTextElement>) {
+  return (
+    <>
+      {LINES.map((l) => (
+        <text key={l.text} x={l.x} y={l.y} textAnchor="middle" fontSize={150} {...props}>
+          {l.text}
+        </text>
+      ))}
+    </>
+  );
+}
+
+function Sparkle({ x, y, r }: { x: number; y: number; r: number }) {
+  const d = `M${x} ${y - r} C${x + r * 0.12} ${y - r * 0.12} ${x + r * 0.12} ${y - r * 0.12} ${x + r} ${y} C${x + r * 0.12} ${y + r * 0.12} ${x + r * 0.12} ${y + r * 0.12} ${x} ${y + r} C${x - r * 0.12} ${y + r * 0.12} ${x - r * 0.12} ${y + r * 0.12} ${x - r} ${y} C${x - r * 0.12} ${y - r * 0.12} ${x - r * 0.12} ${y - r * 0.12} ${x} ${y - r}Z`;
+  return (
+    <g className="logo-spark">
+      <path d={d} fill="url(#sl-pink)" stroke="url(#sl-pink)" strokeWidth={7} strokeLinejoin="round" />
+      <path d={d} fill="url(#sl-chrome)" stroke="#3a0322" strokeWidth={1.5} />
     </g>
   );
+}
 
+export function ChromeLogo() {
   return (
-    <svg className="logo" viewBox="0 0 640 250" role="img" aria-label="Skinny Legend">
+    <svg className="logo" viewBox="0 0 720 340" role="img" aria-label="Skinny Legend">
       <defs>
         <linearGradient id="sl-chrome" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#ffffff" />
-          <stop offset="0.22" stopColor="#f3eef8" />
-          <stop offset="0.46" stopColor="#a69bb3" />
-          <stop offset="0.52" stopColor="#3d2c4f" />
-          <stop offset="0.58" stopColor="#8f7aa6" />
-          <stop offset="0.78" stopColor="#f1e8ff" />
-          <stop offset="0.9" stopColor="#c7f4ff" />
-          <stop offset="1" stopColor="#ffffff" />
+          <stop offset=".3" stopColor="#ffffff" />
+          <stop offset=".44" stopColor="#d6d2db" />
+          <stop offset=".5" stopColor="#9e98a6" />
+          <stop offset=".505" stopColor="#17131b" />
+          <stop offset=".6" stopColor="#2c2731" />
+          <stop offset=".7" stopColor="#7d7685" />
+          <stop offset=".82" stopColor="#e9e6ee" />
+          <stop offset=".93" stopColor="#ffffff" />
+          <stop offset="1" stopColor="#ffc6e3" />
         </linearGradient>
         <linearGradient id="sl-pink" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fff4fb" />
-          <stop offset="0.2" stopColor="#ffc2e4" />
-          <stop offset="0.46" stopColor="#ff3ea5" />
-          <stop offset="0.53" stopColor="#8a0748" />
-          <stop offset="0.6" stopColor="#e5137f" />
-          <stop offset="0.8" stopColor="#ff9fd6" />
-          <stop offset="0.92" stopColor="#ffe0f2" />
-          <stop offset="1" stopColor="#ffffff" />
+          <stop offset="0" stopColor="#ffa6d5" />
+          <stop offset=".3" stopColor="#ff2e97" />
+          <stop offset=".62" stopColor="#b8005f" />
+          <stop offset=".86" stopColor="#ff3fa0" />
+          <stop offset="1" stopColor="#ffa3d3" />
         </linearGradient>
-        <linearGradient id="sl-rim" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="sl-bevel" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0" stopColor="#ffffff" />
-          <stop offset="0.3" stopColor="#d9c9e6" />
-          <stop offset="0.5" stopColor="#7e6a90" />
-          <stop offset="0.7" stopColor="#f7eefe" />
-          <stop offset="1" stopColor="#b9e9ff" />
+          <stop offset=".5" stopColor="#6b6470" />
+          <stop offset="1" stopColor="#e8e4ec" />
         </linearGradient>
-        <linearGradient id="sl-gloss" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity="0.95" />
-          <stop offset="0.38" stopColor="#fff" stopOpacity="0.25" />
-          <stop offset="0.4" stopColor="#fff" stopOpacity="0" />
-        </linearGradient>
-        <filter id="sl-blur" x="-10%" y="-20%" width="120%" height="140%">
-          <feGaussianBlur stdDeviation="6" />
+        <filter id="sl-liquid" x="-5%" y="-10%" width="110%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.006 0.02" numOctaves={2} seed={11} result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale={16} xChannelSelector="R" yChannelSelector="G" result="d" />
+          <feComposite in="d" in2="SourceAlpha" operator="in" />
+        </filter>
+        <filter id="sl-spec" x="-5%" y="-10%" width="110%" height="120%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation={2.6} result="b" />
+          <feSpecularLighting in="b" surfaceScale={5} specularConstant={0.9} specularExponent={38} lightingColor="#ffffff" result="s">
+            <feDistantLight azimuth={240} elevation={58} />
+          </feSpecularLighting>
+          <feComponentTransfer in="s" result="t">
+            <feFuncA type="linear" slope={2.2} intercept={-0.9} />
+          </feComponentTransfer>
+          <feComposite in="t" in2="SourceAlpha" operator="in" />
+        </filter>
+        <filter id="sl-gloss" x="-5%" y="-10%" width="110%" height="120%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation={4} result="b" />
+          <feSpecularLighting in="b" surfaceScale={6} specularConstant={1.2} specularExponent={30} lightingColor="#ffffff" result="s">
+            <feDistantLight azimuth={235} elevation={50} />
+          </feSpecularLighting>
+          <feComponentTransfer in="s" result="t">
+            <feFuncA type="linear" slope={2} intercept={-0.7} />
+          </feComponentTransfer>
+          <feComposite in="t" in2="SourceAlpha" operator="in" result="sp" />
+          <feComposite in="SourceGraphic" in2="sp" operator="arithmetic" k2={1} k3={0.8} />
+        </filter>
+        <filter id="sl-shadow" x="-10%" y="-20%" width="120%" height="150%">
+          <feGaussianBlur stdDeviation={9} />
         </filter>
       </defs>
-      {line("Skinny", 108, "url(#sl-chrome)", 116)}
-      {line("Legend", 222, "url(#sl-pink)", 116)}
-      {/* glints */}
-      <g className="glint" fill="#fff">
-        <path d="M118 40 l4 14 l14 4 l-14 4 l-4 14 l-4 -14 l-14 -4 l14 -4z" />
-        <path d="M520 150 l3 10 l10 3 l-10 3 l-3 10 l-3 -10 l-10 -3 l10 -3z" />
+      <g className="logo-words" strokeLinejoin="round" strokeLinecap="round">
+        {/* soft drop shadow + pink glow */}
+        <g transform="translate(0 14)" opacity={0.8} filter="url(#sl-shadow)">
+          <Words fill="#000" stroke="#000" strokeWidth={30} />
+        </g>
+        {/* pink extrusion (depth) */}
+        <g transform="translate(0 7)">
+          <Words fill="#6e0035" stroke="#6e0035" strokeWidth={26} />
+        </g>
+        {/* glossy pink rim */}
+        <g filter="url(#sl-gloss)">
+          <Words fill="url(#sl-pink)" stroke="url(#sl-pink)" strokeWidth={26} />
+        </g>
+        {/* dark bevel edge + silver bevel */}
+        <Words fill="none" stroke="#2a0219" strokeWidth={13} />
+        <Words fill="none" stroke="url(#sl-bevel)" strokeWidth={7} />
+        {/* liquid chrome body */}
+        <g filter="url(#sl-liquid)">
+          <Words fill="url(#sl-chrome)" />
+        </g>
+        {/* specular highlights */}
+        <g filter="url(#sl-spec)" style={{ mixBlendMode: "screen" }}>
+          <Words fill="#ffffff" />
+        </g>
       </g>
+      <Sparkle x={618} y={70} r={30} />
+      <Sparkle x={112} y={250} r={22} />
+      <Sparkle x={660} y={210} r={12} />
     </svg>
   );
 }
