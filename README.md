@@ -24,6 +24,7 @@ Hot pink, liquid chrome, Y2K gloss. Snap your plate and get the full nutrition t
 - `POST /api/analyze` returns the foods it sees with portion estimates, plus totals: calories, protein, carbs, fat, fiber, sugar, sodium, saturated fat and cholesterol. It also returns vitamin A, C, D, calcium, iron and potassium with %DV, a confidence score and a sassy verdict.
 - Results show as a chrome **Nutrition Facts** card with a per-food breakdown. Every number is editable before you log.
 - The **daily log** shows today's meals with thumbnails, running totals against an editable calorie goal, and macro "gel tube" bars. Meals can be deleted. Everything is stored in `localStorage`.
+- **Legend Chat** (`/chat`): ask the Legend things like "what can I eat today at a restaurant near me?". It uses your location (browser GPS, or a city/zip you type), searches Yelp for nearby spots, and recommends a specific order at each one that fits the calories and macros you have left today, with estimated calories/protein and order hacks ("dressing on the side"). Results show as glossy restaurant cards with rating, price, distance, address, photo and a Yelp link, and you can log a pick straight into today. Nutrition here is an **estimate**: Yelp doesn't provide menu nutrition.
 
 **Run it**
 
@@ -43,8 +44,11 @@ npm run build      # production build
 | `NUTRITION_REASONING_EFFORT` | no | `low` | xAI reasoning effort (`low`/`medium`/`high`) |
 | `OPENAI_API_KEY` | alternative | none | Used only if `XAI_API_KEY` is not set |
 | `OPENAI_NUTRITION_MODEL` | no | `gpt-4o-mini` | OpenAI vision model |
+| `YELP_API_KEY` | for real restaurants in Legend Chat | none | Yelp Places (Fusion) API key. `/api/chat` calls `GET https://api.yelp.com/v3/businesses/search` server-side |
+| `CHAT_MODEL` | no | `NUTRITION_MODEL` | Model for Legend Chat (tool calling + recommendations) |
+| `CHAT_REASONING_EFFORT` | no | `low` | xAI reasoning effort for chat |
 
-With **no key**, `/api/analyze` returns clearly labeled **MOCK** example data and the site shows a **Demo mode** badge.
+With **no key**, `/api/analyze` returns clearly labeled **MOCK** example data and the site shows a **Demo mode** badge. In Legend Chat, no `YELP_API_KEY` means clearly labeled **MOCK** restaurants, and no `XAI_API_KEY` means rule-based **MOCK** picks.
 
 **Deploy on Vercel**
 
