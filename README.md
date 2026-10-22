@@ -2,6 +2,10 @@
 
 > Snap your plate. Know your macros. Be Iconic.
 
+### 💖 [Live demo → skinny-legend-eight.vercel.app](https://skinny-legend-eight.vercel.app)
+
+_Open it on your phone and tap **Snap your plate**. It runs in demo mode with mock results until an `XAI_API_KEY` is added in Vercel._
+
 Skinny Legend is a photo-first calorie and nutrition tracker. Take a picture of your food, get an instant estimate of calories, protein, carbs and fat, tweak it if the AI got it wrong, and watch your day add up. No endless database searching, just main-character energy.
 
 This repo has two apps:
@@ -47,6 +51,8 @@ npm run build      # production build
 With **no key**, `/api/analyze` returns clearly labeled **MOCK** example data and the site shows a **Demo mode** badge.
 
 **Deploy on Vercel**
+
+Live at **https://skinny-legend-eight.vercel.app** (Vercel project `skinny-legend`).
 
 1. Import `djlamoon/skinny-legend` in Vercel.
 2. Set **Root Directory** to `web`. The framework is detected as Next.js.
