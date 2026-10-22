@@ -242,7 +242,7 @@ export function SkinnyLegendApp() {
           {result && phase === "result" && (
             <div ref={resultRef} className="result">
               <div className="verdict glass">
-                <span className="verdict-mark">“</span>
+                <span className="verdict-mark" aria-hidden="true" />
                 <p>{result.verdict}</p>
                 {result.mode === "mock" && <span className="badge small">MOCK example data</span>}
               </div>
