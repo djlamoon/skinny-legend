@@ -1,12 +1,14 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChromeLogo } from "./ChromeLogo";
-import { Sparkles } from "./Sparkles";
+import { AppNav } from "./AppNav";
+import { Backdrop } from "./Backdrop";
 import { GelTube } from "./GelTube";
 import { FoodBreakdown, NutritionCard } from "./NutritionCard";
 import { prepareImage, type PreparedImage } from "@/lib/image";
-import { DEFAULT_STATE, isToday, loadState, saveState, type StoredState } from "@/lib/storage";
-import { EMPTY_TOTALS, type AnalysisResult, type LoggedMeal, type Totals } from "@/lib/types";
+import { DEFAULT_STATE, loadState, saveState, type StoredState } from "@/lib/storage";
+import { todaySummary } from "@/lib/today";
+import type { AnalysisResult, LoggedMeal } from "@/lib/types";
 
 type Phase = "idle" | "preparing" | "analyzing" | "result" | "error";
 
@@ -129,35 +131,18 @@ export function SkinnyLegendApp() {
   const deleteMeal = (id: string) => setState((s) => ({ ...s, meals: s.meals.filter((m) => m.id !== id) }));
   const setGoal = (goal: number) => setState((s) => ({ ...s, goal: goal > 0 ? goal : s.goal }));
 
-  const today = state.meals.filter((m) => isToday(m.loggedAt)).sort((a, b) => b.loggedAt.localeCompare(a.loggedAt));
-  const totals: Totals = today.reduce(
-    (acc, m) => {
-      (Object.keys(acc) as (keyof Totals)[]).forEach((k) => (acc[k] += m.totals[k] || 0));
-      return acc;
-    },
-    { ...EMPTY_TOTALS },
-  );
-  const goal = state.goal;
-  const left = Math.round(goal - totals.calories);
-  const proteinGoal = Math.round((goal * 0.3) / 4);
-  const carbsGoal = Math.round((goal * 0.4) / 4);
-  const fatGoal = Math.round((goal * 0.3) / 9);
+  const { meals: today, totals, goal, left, proteinGoal, carbsGoal, fatGoal } = todaySummary(state);
 
   return (
     <div className="page">
-      <div className="bg" aria-hidden>
-        <div className="blob b1" />
-        <div className="blob b2" />
-        <div className="blob b3" />
-        <div className="grid-floor" />
-      </div>
-      <Sparkles />
+      <Backdrop />
 
       <header className="hero">
         <ChromeLogo />
         <p className="tagline">
           Snap it. <span>Track it.</span> Slay it.
         </p>
+        <AppNav active="snap" />
         {demo && (
           <span className="badge" title="No API key configured — results are example data">
             <i /> Demo mode · mock results
